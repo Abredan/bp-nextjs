@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["public", "auth", "storage"]
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/d/migrate-shadow
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+model Account {
+  id                String  @id @default(uuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+  @@schema("public")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+  @@schema("auth")
+}
+
+model User {
+  id                  String    @id @default(uuid())
+  name                String?
+  email               String?   @unique
+  emailVerified       DateTime? @map("email_verified")
+  image               String?
+  hashedPassword      String?   @map("hashed_password")
+  city                String?
+  country             String?
+  accountActive       Boolean   @default(false) @map("account_active")
+  updateAndPromotions Boolean   @default(false) @map("get_promotions")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+  roleId              String    @map("role_id")
+
+  role      Role            @relation(fields: [roleId], references: [id])
+  accounts  Account[]
+  sessions  Session[]
+  passwords PasswordReset[]
+
+  customer StripeCustomer?
+
+  @@map("users")
+  @@schema("public")
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  displayName String   @map("display_name")
+  name        String   @unique
+  permissions String[]
+  enabled     Boolean
+  user        User[]
+
+  @@map("roles")
+  @@schema("public")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+  @@schema("auth")
+}
+
+model StripeCustomer {
+  id         String    @id @default(uuid())
+  userId     String    @unique @map("user_id")
+  customerId String    @unique @map("customer_id")
+  plan       String?
+  deadline   DateTime?
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("stripe_customers")
+  @@schema("auth")
+}
+
+model PasswordReset {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("password_resets")
+  @@schema("auth")
+}

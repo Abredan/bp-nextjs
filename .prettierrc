@@ -1,0 +1,9 @@
+{
+  "singleAttributePerLine": true,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "bracketSameLine": true,
+  "vueIndentScriptAndStyle": true,
+  "printWidth": 100,
+  "formatOnSave": true
+}

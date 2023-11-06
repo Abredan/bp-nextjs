@@ -1,0 +1,12 @@
+@hostname = localhost
+@port = 3000
+@baseUrl = http://{{hostname}}:{{port}}/api
+
+###
+POST {{baseUrl}}/auth/register HTTP/2.0
+Content-Type: application/json
+Accept: application/json
+
+{
+  
+}
