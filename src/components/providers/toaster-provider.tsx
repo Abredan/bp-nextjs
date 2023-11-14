@@ -1,15 +1,16 @@
-"use client";
-import React from "react";
-import { Toaster } from "sonner";
+'use client';
+import React from 'react';
+import { Toaster } from 'sonner';
 
 const ToasterProvider = () => {
   return (
     <Toaster
       expand={false}
       richColors={false}
-      invert={true}
+      invert={false}
+      duration={5000}
       visibleToasts={5}
-      position="top-center"
+      position='top-center'
       closeButton={true}
     />
   );

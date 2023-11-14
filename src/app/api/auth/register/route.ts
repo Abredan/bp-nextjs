@@ -4,8 +4,8 @@ import bcrypt from 'bcrypt';
 import { z } from 'zod';
 import { User } from 'next-auth';
 import Stripe from 'stripe';
-import prismadb from '@/lib/prisma-db';
 import { NextRequest } from 'next/server';
+import prismadb from '@/lib/prisma-db';
 
 const PostCreateUserParams = z
   .object({
@@ -63,7 +63,7 @@ export const POST = async (request: NextRequest) => {
     }
 
     const defaultRole = await prismadb.role.findUnique({
-      where: { name: 'USER' },
+      where: { displayName: 'Basic' },
     });
     if (!defaultRole) {
       return CustomNextResponse.raise(`No User Role for you. Please contact Support or Admin.`);

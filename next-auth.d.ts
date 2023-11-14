@@ -1,9 +1,9 @@
 import NextAuth, { DefaultSession, DefaultUser } from 'next-auth';
 import { Role, User } from '@prisma/client';
 
-
 interface SafeUser
   extends Omit<DefaultUser, 'createdAt' | 'updatedAt' | 'hashedPassword' | 'email'> {
+  roleId?: string;
   role?: Role;
 }
 
@@ -37,7 +37,7 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
-  interface JWT extends SafeUser{
+  interface JWT extends SafeUser {
     refreshTokenExpires?: number;
     accessTokenExpires?: number;
     refreshToken?: string;

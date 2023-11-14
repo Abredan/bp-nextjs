@@ -4,11 +4,12 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 interface LogoProps {
+  text?: string;
   iconOnly?: boolean;
   size?: 'lg' | 'md' | 'sm' | 'xs';
 }
 
-const Logo = ({ iconOnly = false, size = 'sm' }: LogoProps) => {
+const Logo = ({ iconOnly = false, size = 'sm', text = 'Boilerplate' }: LogoProps) => {
   const trueSize = useMemo(() => {
     switch (size) {
       case 'lg':
@@ -43,9 +44,9 @@ const Logo = ({ iconOnly = false, size = 'sm' }: LogoProps) => {
       {!iconOnly && (
         <p
           className={cn(
-            'transition-all duration-700 origin-left sm:flex items-center hidden scale-0 sm:scale-100 font-extrabold tracking-tight',
+            'transition-all text-[.8em] duration-700 origin-left sm:flex items-center hidden scale-0 sm:scale-100 font-extrabold tracking-tight',
           )}>
-          Boilerplate
+          {text}
         </p>
       )}
     </div>

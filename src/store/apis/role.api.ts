@@ -1,23 +1,23 @@
-import { api } from './api';
 import { Role } from '@prisma/client';
+import { api } from './base.api';
 
 export const rolesApi = api.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
-    getRoles: builder.query<Role[], string>({
+    getRoles: builder.query<Role[], void>({
       query: () => ({ url: `/roles`, method: `GET` }),
     }),
     getRole: builder.query<Role, string>({
       query: (roleId: string) => ({ url: `/roles/${roleId}`, method: `GET` }),
     }),
-    createRole: builder.mutation<Role, string>({
+    createRole: builder.mutation<Role, Partial<Role>>({
       query: (role: Role) => ({ url: `/roles`, method: `POST`, data: role }),
     }),
-    updateRole: builder.mutation<Role[], string>({
-      query: (roleId: Role | Partial<Role>) => ({ url: `/roles/${roleId}`, method: `PATCH` }),
+    updateRole: builder.mutation<Role, Partial<Role> & Pick<Role, 'id'>>({
+      query: ({id, ...patch}) => ({ url: `/roles/${id}`, method: `PATCH` }),
     }),
     deleteRole: builder.mutation<Role, string>({
-      query: (roleId: string) => ({ url: `/roles/${roleId}`, method: `DELETE` }),
+      query: (id: string) => ({ url: `/roles/${id}`, method: `DELETE` }),
     }),
   }),
 });

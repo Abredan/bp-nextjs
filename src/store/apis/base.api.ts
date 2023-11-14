@@ -1,5 +1,5 @@
 import { axiosBaseQuery } from '@/lib/axios';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
 export const api = createApi({
   tagTypes: ['Api'],

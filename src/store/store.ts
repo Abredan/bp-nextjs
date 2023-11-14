@@ -1,14 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import rolesReducer from './slices/roles.slice';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { api } from './apis/api';
+import { api } from './apis/base.api';
 import { rtkQueryErrorLogger } from './middlewares/rtk-query-error.middleware';
+import { appConfigSlice, roleSlice, userSlice } from './slices';
+import { composeWithDevTools } from '@reduxjs/toolkit/dist/devtoolsExtension';
 
 export const store = configureStore({
   devTools: process.env.NODE_ENV! !== 'production',
   reducer: {
-    roles: rolesReducer,
+    config: appConfigSlice.reducer,
+    roles: roleSlice.reducer,
+    users: userSlice.reducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>

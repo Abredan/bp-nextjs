@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { z } from 'zod';
-import { api } from './api';
+import { api } from './base.api';
 
 export const LoginFormInputs = z.object({
   username: z.string().min(5, { message: 'Username length not correct' }),
@@ -23,11 +23,7 @@ export const authApi = api.injectEndpoints({
         url: '/auth/register',
         method: 'POST',
         data: body,
-      }),
-      transformResponse: (rawResult: { data: { message: string } }, meta) => {
-        console.log('rawResult', rawResult);
-        return rawResult.data;
-      },
+      })
     }),
   }),
 });

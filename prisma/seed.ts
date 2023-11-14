@@ -7,9 +7,9 @@ async function main() {
 
 const createRoles = async () => {
   const roles = [
-    { displayName: 'Basic', name: 'USER', permissions: ['_account'], enabled: true },
-    { displayName: 'Admin', name: 'ADMIN', permissions: ['_account'], enabled: true },
-    { displayName: 'Super', name: 'ROOT', permissions: ['_account', '_root'], enabled: true },
+    { displayName: 'Basic', permissions: ['_account'], enabled: true },
+    { displayName: 'Admin', permissions: ['_account'], enabled: true },
+    { displayName: 'Super', permissions: ['_account', '_root'], enabled: true },
   ];
   return prisma.role.createMany({ data: roles });
 };

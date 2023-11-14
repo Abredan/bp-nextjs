@@ -1,14 +1,14 @@
-import { PayloadAction, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { Role } from '@prisma/client';
 import { rolesApi } from '../apis/role.api';
+import { RootState } from '../store';
 
 const rolesAdapter = createEntityAdapter<Role>({
   selectId: (role) => role.id,
-  sortComparer: (a, b) => a.name.localeCompare(b.name),
+  sortComparer: (a, b) => a.displayName.localeCompare(b.displayName),
 });
 
-export const rolesSlice = createSlice({
+export const roleSlice = createSlice({
   name: 'roles',
   initialState: rolesAdapter.getInitialState(),
   reducers: {},
@@ -22,4 +22,4 @@ export const rolesSlice = createSlice({
 
 export const roleSelect = (state: RootState) => state.roles;
 
-export default rolesSlice.reducer;
+export default roleSlice.reducer;

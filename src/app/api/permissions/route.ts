@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   ];
   permissions = [...permissions,...tables.flatMap((t) =>
     PERMISSIONS.map((perm: string) => ({
-      code: `_${t.tablename}.${perm}`,
+      code: `${t.tablename}.${perm}`,
       description: `${perm} entries in ${t.tablename}`,
       group: t.tablename
     })),

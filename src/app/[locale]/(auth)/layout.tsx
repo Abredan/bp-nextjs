@@ -6,7 +6,7 @@ const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='min-h-screen h-full'>
       <AuthNavbar />
-      <main className='h-full overflow-x-hidden w-full pt-60 min-h-screen'>{children}</main>
+      <main className='h-full overflow-x-hidden w-full pt-32 min-h-screen'>{children}</main>
     </div>
   );
 };

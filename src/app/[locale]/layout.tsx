@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-// import { Onest } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import ToasterProvider from '@/components/providers/toaster-provider';
@@ -8,9 +7,7 @@ import AuthProvider from '@/components/providers/auth-provider';
 import { getServerSession } from 'next-auth';
 import { nextAuthOptions } from '@/lib/auth';
 import { LOCALES } from '@/i18n';
-import './globals.css';
-
-// const fonts = Onest({ subsets: ['latin'], weight: ['400', '600', '700'] });
+import './global.css';
 
 export const metadata: Metadata = {
   title: 'Ready to accelerate',
@@ -52,7 +49,9 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang={locale}>
+    <html
+      lang={locale}
+      data-theme={`bumblebee`}>
       <body>
         <ReduxProvider>
           <AuthProvider session={session}>

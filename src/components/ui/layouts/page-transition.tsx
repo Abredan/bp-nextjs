@@ -6,9 +6,9 @@ type PageTransitionProps = HTMLMotionProps<'div'>;
 type PageTransitionRef = React.ForwardedRef<HTMLDivElement>;
 
 const PageTransition = ({ children, ...rest }: PageTransitionProps, ref: PageTransitionRef) => {
-  const onInitial = { y: 15, opacity:0 };
-  const onAnimate = { y: 0, opacity:1 };
-  const onExit = { y: -15, opacity:0 };
+  const onInitial = { y: 100, opacity: 0 };
+  const onAnimate = { y: 0, opacity: 1 };
+  const onExit = { y: -100, opacity: 0 };
 
   const transition = { duration: 0.6, ease: 'easeInOut', type: 'spring', stiffness: 100 };
   return (
